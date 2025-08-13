@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -37,7 +38,7 @@ export default function Navbar() {
           Special Offers
         </Link>
         <Link
-          href="#"
+          href="/restaurant"
           className="px-4 py-1.5 hover:text-[#33a9c9] transition-all duration-300 hover:bg-gray-50 rounded-full hover:scale-105"
         >
           Restaurants
@@ -60,3 +61,4 @@ export default function Navbar() {
     </nav>
   );
 }
+
