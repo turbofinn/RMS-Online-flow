@@ -1,170 +1,171 @@
-import { Button, TextField } from "@mui/material";
 import Image from "next/image";
 
-export default function HeroSection() {
+// -------------------- DESKTOP --------------------
+function HeroDesktop() {
   return (
-    <section className="w-full py-12 pl-4 md:pl-16 flex rounded-2xl flex-col md:flex-row items-center justify-between min-h-[400px] relative overflow-hidden border border-gray-200">
-      {/* Left: Text and Search */}
-      <div className="flex-1 z-10 max-w-xl relative">
-        <p className="text-gray-500 mb-2 text-sm">
-          Order Restaurant food, takeaway and groceries.
-        </p>
-        <h1 className="font-bold text-4xl md:text-5xl text-[#23223A] mb-2 leading-tight">
-          Feast Your Senses,
-        </h1>
-        <h2 className="font-bold text-4xl md:text-5xl text-[#ff2e3a] mb-6 leading-tight">
-          Fast and Fresh
-        </h2>
-        <p className="mb-4 text-gray-600">
-          Enter a postcode to see what we deliver
-        </p>
-        <form className="flex gap-2 items-center">
-          <TextField
-            variant="outlined"
-            placeholder="e.g. EC4R 3TE"
-            size="small"
-            sx={{
-              background: "#fff",
-              borderRadius: "9999px",
-              width: "200px",
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "9999px",
-              },
-            }}
-          />
-          <Button
-            variant="contained"
-            sx={{
-              background: "#33a9c9",
-              borderRadius: "9999px",
-              px: 4,
-              py: 1.5,
-              textTransform: "none",
-              fontWeight: 600,
-              fontFamily: "Poppins",
-              "&:hover": { background: "#2e94b3" },
-            }}
-          >
-            Search
-          </Button>
-        </form>
-      </div>
+    <section className="hidden md:block relative w-full overflow-hidden border border-gray-200 rounded-2xl bg-[#FBFBFB] h-[500px]">
+      <div className="flex flex-col md:flex-row items-center relative z-10">
+        {/* Left Text */}
+        <div className="flex-1 pl-6 md:pl-16 pr-6 py-12 max-w-lg relative z-20">
+          <p className="text-gray-500 mb-2 text-sm">
+            Order Restaurant food, takeaway and groceries.
+          </p>
+          <h1 className="font-bold text-4xl md:text-5xl text-[#23223A] leading-tight whitespace-nowrap">
+            Feast Your Senses,
+          </h1>
+          <h2 className="font-bold text-4xl md:text-5xl text-[#ff2e3a] leading-tight mb-6">
+            Fast and Fresh
+          </h2>
+          <p className="mb-4 text-gray-600">
+            Enter a postcode to see what we deliver
+          </p>
 
-      {/* Center Image (between left and right sections) */}
-      <div className="absolute left-1/2 bottom-6 -translate-x-1/2 -translate-y-1/2 z-20">
-        <Image
-          src="/hero2.png"
-          alt="Secondary hero"
-          width={1200}
-          height={1000}
-          className="object-cover"
-          priority
-        />
-      </div>
-
-      {/* Right: Hero Image and Notifications */}
-      <div className="flex-1 flex items-center justify-center relative mt-12 md:mt-0 h-[500px]">
-        {/* Blue background image */}
-        <Image
-          src="/herobgright.png"
-          alt="Background"
-          fill
-          className="object-cover absolute right-0 top-0 w-full h-full z-0"
-          style={{ objectPosition: "right" }}
-        />
-
-        {/* Main Hero Image (centered, large) */}
-        <Image
-          src="/hero1.png"
-          alt="Main hero"
-          width={400}
-          height={500}
-          className="rounded-2xl shadow-xl object-cover z-10 absolute bottom-0 left-1/2 -translate-x-1/2"
-          priority
-        />
-
-        {/* Notification Stack */}
-        <div className="absolute top-8 right-0 flex flex-col gap-8 z-30">
-          {/* Notification 1 */}
-          <div className="flex items-center relative">
-            <div className="bg-white rounded-xl shadow-lg px-6 py-4 flex flex-col border border-blue-100 min-w-[320px] max-w-[340px]">
-              <span className="text-xs text-[#33a9c9] font-bold mb-1">
-                TURBO
-              </span>
-              <span className="font-semibold text-base">
-                We've Received your order!
-              </span>
-              <span className="text-xs text-gray-500">
-                Awaiting Restaurant acceptance
-              </span>
-              <span className="text-[11px] text-gray-400 absolute top-3 right-6">
-                now
-              </span>
-            </div>
-            <span
-              className="ml-4 text-[64px] font-extrabold text-[#b3e3f3] leading-none select-none pointer-events-none drop-shadow-sm"
-              style={{
-                WebkitTextStroke: "2px #33a9c9",
-                fontFamily: "Poppins, sans-serif",
-              }}
-            >
-              1
-            </span>
-          </div>
-          {/* Notification 2 */}
-          <div className="flex items-center relative">
-            <div className="bg-white rounded-xl shadow-lg px-6 py-4 flex flex-col border border-blue-100 min-w-[320px] max-w-[340px]">
-              <span className="text-xs text-[#33a9c9] font-bold mb-1">
-                TURBO
-              </span>
-              <span className="font-semibold text-base">
-                Order Accepted! <span className="text-green-600">✔️</span>
-              </span>
-              <span className="text-xs text-gray-500">
-                Your order will be delivered shortly
-              </span>
-              <span className="text-[11px] text-gray-400 absolute top-3 right-6">
-                now
-              </span>
-            </div>
-            <span
-              className="ml-4 text-[64px] font-extrabold text-[#b3e3f3] leading-none select-none pointer-events-none drop-shadow-sm"
-              style={{
-                WebkitTextStroke: "2px #33a9c9",
-                fontFamily: "Poppins, sans-serif",
-              }}
-            >
-              2
-            </span>
-          </div>
-          {/* Notification 3 */}
-          <div className="flex items-center relative">
-            <div className="bg-white rounded-xl shadow-lg px-6 py-4 flex flex-col border border-blue-100 min-w-[320px] max-w-[340px]">
-              <span className="text-xs text-[#33a9c9] font-bold mb-1">
-                TURBO
-              </span>
-              <span className="font-semibold text-base">
-                Your rider's nearby! 🎉
-              </span>
-              <span className="text-xs text-gray-500">
-                They're almost there – get ready!
-              </span>
-              <span className="text-[11px] text-gray-400 absolute top-3 right-6">
-                now
-              </span>
-            </div>
-            <span
-              className="ml-4 text-[64px] font-extrabold text-[#b3e3f3] leading-none select-none pointer-events-none drop-shadow-sm"
-              style={{
-                WebkitTextStroke: "2px #33a9c9",
-                fontFamily: "Poppins, sans-serif",
-              }}
-            >
-              3
-            </span>
+          {/* Search Bar */}
+          <div className="flex items-center rounded-full overflow-hidden border border-gray-300 w-[400px] max-w-md bg-white shadow-sm">
+            <input
+              type="text"
+              placeholder="e.g. EC4R 3TE"
+              className="flex-1 px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none text-base"
+            />
+            <button className="bg-[#33a9c9] text-white rounded-full font-semibold px-14 py-3 h-full">
+              Search
+            </button>
           </div>
         </div>
+
+        {/* Right Section */}
+        <div className="flex-1 relative flex items-center justify-center h-[480px] z-10">
+          {/* Blue background image */}
+          <div className="absolute top-[20px] right-0 w-[626px] h-[500px] z-0">
+            <Image
+              src="/assets/bgback.svg"
+              alt="Background"
+              fill
+              className="object-contain object-right"
+              priority
+            />
+          </div>
+
+          {/* Noodles girl */}
+          <Image
+            src="/assets/hero2.svg"
+            alt="Noodles"
+            width={320}
+            height={200}
+            className="rounded-2xl shadow-xl object-cover z-10 absolute bottom-[-20px] right-[250px]"
+            priority
+          />
+
+          {/* Notifications */}
+          <div className="absolute bottom-8 right-4 flex flex-col-reverse gap-6 z-30">
+            {[
+              {
+                title: "We've Received your order!",
+                subtitle: "Awaiting Restaurant acceptance",
+                num: "3",
+                offset: "translate-x-[-60px]",
+              },
+              {
+                title: "Order Accepted! ✔️",
+                subtitle: "Your order will be delivered shortly",
+                num: "2",
+                offset: "translate-x-[-20px]",
+              },
+              {
+                title: "Your rider's nearby! 🎉",
+                subtitle: "They're almost there – get ready!",
+                num: "1",
+                offset: "translate-x-[-60px]",
+              },
+            ].map((note, idx) => (
+              <div
+                key={idx}
+                className={`flex items-start py-2 relative ${note.offset}`}
+              >
+                <div className="bg-white rounded-xl shadow-lg px-5 py-2 flex flex-col border border-blue-100 min-w-[280px] max-w-[300px] relative">
+                  <span className="text-xs text-[#33a9c9] font-bold mb-1">
+                    <Image
+                      src="/assets/logo2.svg"
+                      alt="Noodles"
+                      width={40}
+                      height={20}
+                      priority
+                    />
+                  </span>
+                  <span className="font-semibold text-gray-700 text-sm">
+                    {note.title}
+                  </span>
+                  <span className="text-xs text-gray-500">{note.subtitle}</span>
+                  <span className="text-[10px] text-gray-400 absolute top-4 right-4">
+                    now
+                  </span>
+                  <span
+                    className="absolute -top-8 -right-4 text-[42px] font-extrabold leading-none drop-shadow-sm"
+                    style={{
+                      WebkitTextStroke: "2px #33a9c9",
+                      fontFamily: "Poppins, sans-serif",
+                    }}
+                  >
+                    {note.num}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Pizza girl */}
+        <Image
+          src="/assets/hero1.svg"
+          alt="Pizza girl"
+          width={700}
+          height={925}
+          className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 z-20 object-contain"
+          priority
+        />
       </div>
     </section>
+  );
+}
+
+// -------------------- MOBILE --------------------
+function HeroMobile() {
+  return (
+    <section className="block md:hidden bg-[#FBFBFB] p-6 text-center">
+      <p className="text-gray-500 mb-2 text-sm">
+        Order Restaurant food, takeaway and groceries.
+      </p>
+      <h1 className="font-bold text-3xl text-[#23223A]">Feast Your Senses,</h1>
+      <h2 className="font-bold text-3xl text-[#ff2e3a] mb-4">Fast and Fresh</h2>
+
+      {/* Search bar */}
+      <div className="flex items-center rounded-full overflow-hidden border border-gray-300 bg-white shadow-sm mb-6">
+        <input
+          type="text"
+          placeholder="e.g. EC4R 3TE"
+          className="flex-1 px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none text-base"
+        />
+        <button className="bg-[#33a9c9] text-white px-6 py-3">Search</button>
+      </div>
+
+      {/* Simple hero image */}
+      <Image
+        src="/hero1.png"
+        alt="Hero mobile"
+        width={300}
+        height={350}
+        className="rounded-2xl shadow-lg object-cover mx-auto"
+      />
+    </section>
+  );
+}
+
+// -------------------- EXPORT --------------------
+export default function HeroSection() {
+  return (
+    <>
+      <HeroDesktop />
+      <HeroMobile />
+    </>
   );
 }
