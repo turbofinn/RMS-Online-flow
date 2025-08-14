@@ -1,9 +1,5 @@
 "use client";
-<<<<<<< HEAD
-import React from "react";
-=======
 import React, { useState } from "react";
->>>>>>> 197ed0c2f3e5e33a1b56ae89a1f4dfc5566f0170
 import Link from "next/link";
 import Image from "next/image";
 import { AccountCircle, Menu, Close } from "@mui/icons-material";
@@ -18,7 +14,7 @@ export default function Navbar() {
     { label: "Home", href: "#", primary: true },
     { label: "Browse Menu", href: "#" },
     { label: "Special Offers", href: "#" },
-    { label: "Restaurants", href: "#" },
+    { label: "Restaurants", href: "/restaurant" },
     { label: "Track Order", href: "#" },
   ];
 
@@ -34,38 +30,6 @@ export default function Navbar() {
         className="hidden md:flex items-center gap-3 text-gray-700"
         style={{ fontFamily: "Poppins", fontWeight: 500, fontSize: "14px" }}
       >
-<<<<<<< HEAD
-        <Link
-          href="#"
-          className="px-8 py-1.5 bg-[#33a9c9] text-white rounded-full hover:bg-[#2e94b3] transition-all duration-300 hover:scale-105 hover:shadow-md"
-        >
-          Home
-        </Link>
-        <Link
-          href="#"
-          className="px-4 py-1.5 hover:text-[#33a9c9] transition-all duration-300 hover:bg-gray-50 rounded-full hover:scale-105"
-        >
-          Browse Menu
-        </Link>
-        <Link
-          href="#"
-          className="px-4 py-1.5 hover:text-[#33a9c9] transition-all duration-300 hover:bg-gray-50 rounded-full hover:scale-105"
-        >
-          Special Offers
-        </Link>
-        <Link
-          href="/restaurant"
-          className="px-4 py-1.5 hover:text-[#33a9c9] transition-all duration-300 hover:bg-gray-50 rounded-full hover:scale-105"
-        >
-          Restaurants
-        </Link>
-        <Link
-          href="#"
-          className="px-4 py-1.5 hover:text-[#33a9c9] transition-all duration-300 hover:bg-gray-50 rounded-full hover:scale-105"
-        >
-          Track Order
-        </Link>
-=======
         {navLinks.map((link) =>
           link.primary ? (
             <Link
@@ -85,7 +49,6 @@ export default function Navbar() {
             </Link>
           )
         )}
->>>>>>> 197ed0c2f3e5e33a1b56ae89a1f4dfc5566f0170
       </div>
 
       {/* Desktop Login */}
@@ -109,7 +72,7 @@ export default function Navbar() {
         <div className="w-64 flex flex-col h-full bg-white">
           {/* Drawer Header */}
           <div className="flex items-center justify-between p-4 border-b">
-            <Image src="/logo.png" alt="Turbo Eats" width={80} height={50} />
+            <Image src="assets/logo.svg" alt="Turbo Eats" width={80} height={50} />
             <IconButton onClick={toggleDrawer(false)}>
               <Close />
             </IconButton>

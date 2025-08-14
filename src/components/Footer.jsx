@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="md:col-span-4 flex flex-col justify-between">
             <div>
               <Image
-                src="/logo.png"
+                src="/assets/logo.svg"
                 alt="Turbo Logo"
                 width={160}
                 height={60}
