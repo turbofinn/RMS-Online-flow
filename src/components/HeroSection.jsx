@@ -150,7 +150,7 @@ function HeroMobile() {
 
       {/* Simple hero image */}
       <Image
-        src="/hero1.svg"
+        src="/hero1.png"
         alt="Hero mobile"
         width={300}
         height={350}

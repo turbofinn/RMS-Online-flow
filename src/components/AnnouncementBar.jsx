@@ -1,16 +1,82 @@
 "use client";
+import { useState } from "react";
 import { LocationOn, ArrowCircleDown } from "@mui/icons-material";
 import Link from "next/link";
 import Image from "next/image";
 
+const GOOGLE_MAPS_API_KEY = "AIzaSyD-_p4x8ysVeIqV1H92viTaonxkBW80QYA";
+
 const AnnouncementBar = () => {
+  const [location, setLocation] = useState("Fetching location...");
+  const [loading, setLoading] = useState(false);
+
+  const fetchLocation = () => {
+    if (!navigator.geolocation) {
+      setLocation("Geolocation not supported");
+      return;
+    }
+
+    setLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        try {
+          const res = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}`
+          );
+          const data = await res.json();
+
+          if (data.status === "OK" && data.results.length > 0) {
+            const components = data.results[0].address_components;
+
+            let city = "";
+            let state = "";
+
+            components.forEach((comp) => {
+              // First priority: locality
+              if (comp.types.includes("locality") && !city) {
+                city = comp.long_name;
+              }
+              // Second priority: administrative_area_level_2 (district/city)
+              else if (
+                comp.types.includes("administrative_area_level_2") &&
+                !city
+              ) {
+                city = comp.long_name;
+              }
+              // State
+              if (
+                comp.types.includes("administrative_area_level_1") &&
+                !state
+              ) {
+                state = comp.long_name;
+              }
+            });
+
+            const address = city ? `${city}, ${state}` : `${lat}, ${lng}`;
+            setLocation(address);
+          } else {
+            setLocation(`Lat: ${lat}, Lng: ${lng}`);
+          }
+        } catch (error) {
+          console.error(error);
+          setLocation("Error fetching location");
+        }
+        setLoading(false);
+      },
+      (err) => {
+        console.error(err);
+        setLocation("Permission denied");
+        setLoading(false);
+      }
+    );
+  };
+
   return (
     <div
-      style={{
-        fontFamily: "Poppins",
-        fontWeight: 500,
-        fontSize: "12px",
-      }}
+      style={{ fontFamily: "Poppins", fontWeight: 500, fontSize: "12px" }}
       className="bg-[#FAFAFA] border border-gray-200 rounded-b-2xl pl-2 sm:pl-4 lg:pl-8 flex justify-between items-stretch text-sm text-gray-700 h-12 overflow-hidden"
     >
       {/* Left Section - Promo */}
@@ -35,23 +101,25 @@ const AnnouncementBar = () => {
           className="text-[#03081F] font-medium flex-shrink-0"
         />
         <span className="font-medium truncate">
-          Regent Street, A5, A4201, London
+          {loading ? "Fetching location..." : location}
         </span>
-        <Link
-          href="#"
+        <button
+          onClick={fetchLocation}
           className="text-[#FC8A06] text-xs underline whitespace-nowrap flex-shrink-0"
         >
           Change Location
-        </Link>
+        </button>
       </div>
 
-      {/* Mobile Location - Only visible on small screens */}
+      {/* Mobile Location */}
       <div className="flex md:hidden items-center gap-1 h-full py-2 px-1 flex-shrink min-w-0">
         <LocationOn
           fontSize="small"
           className="text-[#03081F] font-medium flex-shrink-0"
         />
-        <span className="text-xs font-medium">London</span>
+        <span className="text-xs font-medium">
+          {loading ? "Fetching..." : location}
+        </span>
       </div>
 
       {/* Right Section - Cart */}

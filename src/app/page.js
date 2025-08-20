@@ -1,7 +1,10 @@
+import AboutUs from "@/components/AboutUs";
+import DeliveryServiceUI from "@/components/DeliveryServiceUI";
 import HeroSection from "@/components/HeroSection";
 import PopularBrands from "@/components/PopularBrands";
 import PopularCategories from "@/components/PopularCategories";
 import PopularRestaurant from "@/components/PopularRestaurant";
+import PromoBanner from "@/components/PromoBanner";
 
 // Main landing page component that renders all major sections
 export default function Home() {
@@ -25,6 +28,18 @@ export default function Home() {
       {/* Popular Restaurant Brands */}
       <div className="mb-4 mt-4 md:mb-8 md:mt-8">
         <PopularBrands />
+      </div>
+      {/* Promo Banner */}
+      <div className="mb-4 mt-4 md:mb-8 md:mt-8">
+        <PromoBanner />
+      </div>
+      {/* Service Ui */}
+      <div className="mb-4 mt-4 md:mb-8 md:mt-8">
+        <DeliveryServiceUI />
+      </div>
+      {/* About US*/}
+      <div className="mb-4 mt-4 md:mb-8 md:mt-8">
+        <AboutUs />
       </div>
     </div>
   );

@@ -1,58 +1,62 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Facebook, Instagram, LinkedIn, Twitter } from "@mui/icons-material";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#D9D9D9] pt-2">
+    <footer className="bg-[#D9D9D9] pt-6">
       {/* Top Content Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 ">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-10 border-b border-gray-300">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8  border-b border-gray-300">
           {/* Logo and App Stores */}
-          <div className="md:col-span-4 flex flex-col justify-between">
-            <div>
+          <div className="md:col-span-4 flex flex-col">
+            <div className="flex flex-col items-center md:items-start">
+              {/* Logo */}
               <Image
                 src="/assets/logo.svg"
                 alt="Turbo Logo"
-                width={160}
-                height={60}
-                className="mb-4"
+                width={170}
+                height={80}
+                style={{ marginBottom: -30 }}
+                className="mx-auto md:mx-0"
               />
 
-              <div className="flex gap-4 mb-4">
-                {/* App Store */}
-                <Link href="#">
-                  <div className="bg-black text-white rounded-md p-3 flex items-center gap-2 hover:bg-gray-800 w-40">
-                    <div className="text-left">
-                      <p className="text-xs text-gray-300">Download on the</p>
-                      <p className="text-sm font-semibold">App Store</p>
-                    </div>
-                  </div>
+              {/* Store Buttons */}
+              <div
+                className="flex flex-row gap-2 items-center justify-center md:justify-start"
+                style={{ marginTop: -20 }}
+              >
+                <Link href="#" aria-label="Download on the App Store">
+                  <img
+                    src="/assets/appstore.svg"
+                    alt="App Store"
+                    className="w-32 h-auto object-contain block"
+                  />
                 </Link>
-
-                {/* Google Play */}
-                <Link href="#">
-                  <div className="bg-black text-white rounded-md p-3 flex items-center gap-2 hover:bg-gray-800 w-40">
-                    <div className="text-left">
-                      <p className="text-xs text-gray-300">GET IT ON</p>
-                      <p className="text-sm font-semibold">Google Play</p>
-                    </div>
-                  </div>
+                <Link href="#" aria-label="Get it on Google Play">
+                  <img
+                    src="/assets/googleplay.svg"
+                    alt="Google Play"
+                    className="w-32 h-auto object-contain block"
+                  />
                 </Link>
               </div>
             </div>
 
-            <p className="text-gray-600 text-xs mt-2">
+            <p className="text-gray-600 text-xs mt-2 text-center md:text-left">
               Company # 490039-445, Registered with House of companies.
             </p>
           </div>
 
           {/* Newsletter */}
-          <div className="md:col-span-4 mt-10 pt-10">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <div className="md:col-span-4 mt-2">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center md:text-left">
               Get Exclusive Deals in your inbox
             </h3>
-            <div className="relative mb-3">
+
+            {/* Original Desktop Form */}
+            <div className="relative mb-3 hidden md:block">
               <input
                 type="email"
                 placeholder="you@example.com"
@@ -62,8 +66,21 @@ const Footer = () => {
                 Subscribe
               </button>
             </div>
-            <p className="text-xs text-gray-600">
-              We won’t spam you. Read our{" "}
+
+            {/* Mobile Stacked Form */}
+            <div className="block md:hidden mb-3">
+              <input
+                type="email"
+                placeholder="you@example.com"
+                className="w-full bg-gray-200 px-4 py-3 border text-black border-gray-300 rounded-full outline-none focus:border-[#33a9c9] focus:ring-1 focus:ring-[#33a9c9] transition text-sm mb-3"
+              />
+              <button className="w-full py-3 bg-[#33a9c9] text-white rounded-full hover:bg-[#2e94b3] text-sm font-medium">
+                Subscribe
+              </button>
+            </div>
+
+            <p className="text-xs text-gray-600 text-center md:text-left mb-4">
+              We won't spam you. Read our{" "}
               <Link
                 href="#"
                 className="underline hover:text-[#33a9c9] transition-colors"
@@ -72,12 +89,47 @@ const Footer = () => {
               </Link>
               .
             </p>
+
+            {/* Social Media Icons */}
+            <div className="flex gap-4 justify-center md:justify-start">
+              <Link
+                href="#"
+                aria-label="Facebook"
+                className="text-gray-600 hover:text-[#33a9c9] transition-colors"
+              >
+                <Facebook className="w-5 h-5" />
+              </Link>
+
+              <Link
+                href="#"
+                aria-label="Instagram"
+                className="text-gray-600 hover:text-[#33a9c9] transition-colors"
+              >
+                <Instagram className="w-5 h-5" />
+              </Link>
+
+              <Link
+                href="#"
+                aria-label="Twitter"
+                className="text-gray-600 hover:text-[#33a9c9] transition-colors"
+              >
+                <Twitter className="w-5 h-5" />
+              </Link>
+
+              <Link
+                href="#"
+                aria-label="LinkedIn"
+                className="text-gray-600 hover:text-[#33a9c9] transition-colors"
+              >
+                <LinkedIn className="w-5 h-5" />
+              </Link>
+            </div>
           </div>
 
           {/* Footer Links */}
-          <div className="md:col-span-4 mt-10 pt-10">
-            <div className="grid grid-cols-2 gap-6">
-              <div>
+          <div className="md:col-span-4 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="text-center md:text-left">
                 <h4 className="text-sm font-bold text-gray-900 mb-3 uppercase">
                   Legal
                 </h4>
@@ -100,7 +152,7 @@ const Footer = () => {
                 </ul>
               </div>
 
-              <div>
+              <div className="text-center md:text-left">
                 <h4 className="text-sm font-bold text-gray-900 mb-3 uppercase">
                   Useful Links
                 </h4>
@@ -127,26 +179,63 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Bar Full Width */}
+      {/* Bottom Bar*/}
       <div className="w-full bg-[#03081F] py-4 mt-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 gap-2">
-          <p>© 2025 TurboTreats. All rights reserved.</p>
-          <div className="flex flex-wrap gap-4 text-xs">
-            <Link href="#" className="hover:text-[#33a9c9] transition">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="hover:text-[#33a9c9] transition">
-              Terms
-            </Link>
-            <Link href="#" className="hover:text-[#33a9c9] transition">
-              Pricing
-            </Link>
-            <Link
-              href="#"
-              className="hover:text-[#33a9c9] transition text-wrap"
-            >
-              Do not sell or share my personal information
-            </Link>
+        <div className="hidden md:block">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 gap-2">
+            <p>© 2025 TurboTreats. All rights reserved.</p>
+            <div className="flex flex-wrap gap-4 text-xs">
+              <Link href="#" className="hover:text-[#33a9c9] transition">
+                Privacy Policy
+              </Link>
+              <Link href="#" className="hover:text-[#33a9c9] transition">
+                Terms
+              </Link>
+              <Link href="#" className="hover:text-[#33a9c9] transition">
+                Pricing
+              </Link>
+              <Link
+                href="#"
+                className="hover:text-[#33a9c9] transition text-wrap"
+              >
+                Do not sell or share my personal information
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile -layout */}
+        <div className="block md:hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p className="text-xs text-gray-400 mb-3">
+              © 2025 TurboTreats. All rights reserved.
+            </p>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-[#33a9c9] transition py-1"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-[#33a9c9] transition py-1"
+              >
+                Terms
+              </Link>
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-[#33a9c9] transition py-1"
+              >
+                Pricing
+              </Link>
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-[#33a9c9] transition py-1"
+              >
+                Do not sell my info
+              </Link>
+            </div>
           </div>
         </div>
       </div>
