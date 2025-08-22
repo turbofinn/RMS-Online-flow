@@ -1,7 +1,7 @@
 "use client";
 import { Card, CardContent, CardMedia, Typography, Chip } from "@mui/material";
 import { useState } from "react";
-import { categories, restaurants } from "../data/restaurants";
+import { categories, restaurants } from "@/data/restaurants";
 
 export default function PopularRestaurant() {
   const [activeCategory, setActiveCategory] = useState("All");

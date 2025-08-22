@@ -28,7 +28,7 @@ export default function Navbar() {
       {/* Desktop Links */}
       <div
         className="hidden md:flex items-center gap-3 text-gray-700"
-        style={{ fontFamily: "Poppins", fontWeight: 500, fontSize: "14px" }}
+        style={{ fontFamily: "Poppins", fontWeight: 600, fontSize: "14px" }}
       >
         {navLinks.map((link) =>
           link.primary ? (

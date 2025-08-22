@@ -1,27 +1,10 @@
-"use client";
-import { Tabs, Tab, TextField, Grid, Box, InputAdornment } from "@mui/material";
+import { Box } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import PromotionalCards from "@/components/restaurant/PromotionalCards";
-import BurgerSection from "@/components/restaurant/BurgerSection";
-import FriesSection from "@/components/restaurant/FriesSection";
-import ColdDrinkSection from "@/components/restaurant/ColdDrinkSection";
-import RestaurantInfoCard from "@/components/restaurant/InformationSection";
-import RestaurantMap from "@/components/restaurant/Map";
-import RestaurantReviews from "@/components/restaurant/Review";
-import SimilarRestaurants from "@/components/restaurant/SimilarRestaurants";
+import React from "react";
 
-export default function RestaurantDetailsPage() {
-  const [tabValue, setTabValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
-
+const Header = () => {
   return (
-    <Box sx={{ width: "100%", fontFamily: "Poppins" }}>
-      {/* Hero Section */}
+    <div>
       <Box
         sx={{
           position: "relative",
@@ -63,7 +46,7 @@ export default function RestaurantDetailsPage() {
           }}
         >
           <Box component="p" sx={{ fontSize: "0.875rem", mb: 0.5 }}>
-            I'm lovin' it!
+            I&#39;m lovin&#39; it!
           </Box>
           <Box
             component="h1"
@@ -73,7 +56,7 @@ export default function RestaurantDetailsPage() {
               mb: { xs: 2, md: 4 },
             }}
           >
-            McDonald's East London
+            McDonald&#39;s East London
           </Box>
 
           <Box
@@ -227,7 +210,6 @@ export default function RestaurantDetailsPage() {
           </Box>
         </Box>
       </Box>
-
       <Box
         sx={{ position: "relative", mt: { xs: "-10px", md: "-20px" }, ml: 0 }}
       >
@@ -257,142 +239,8 @@ export default function RestaurantDetailsPage() {
           Open until 3:00 AM
         </Box>
       </Box>
-
-      <Grid
-        container
-        spacing={2}
-        sx={{ maxWidth: 1728, mx: "auto", px: { xs: 2, md: 3 }, py: 3 }}
-      >
-        <Grid item xs={12} md={6}>
-          <Box
-            component="h2"
-            sx={{
-              fontSize: { xs: "1rem", md: "1.25rem" },
-              fontWeight: 600,
-              textAlign: { xs: "center", md: "left" },
-            }}
-          >
-            All Offers from McDonald's East London
-          </Box>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={6}
-          sx={{
-            display: "flex",
-            justifyContent: { xs: "center", md: "flex-end" },
-          }}
-        >
-          <TextField
-            placeholder="Search from menu..."
-            size="small"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon sx={{ color: "grey.500" }} />
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              bgcolor: "#fff",
-              borderRadius: "9999px",
-              width: { xs: "100%", sm: "300px" },
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "9999px",
-                paddingLeft: "12px",
-              },
-              "& .MuiOutlinedInput-input": {
-                padding: "8.5px 14px 8.5px 0",
-              },
-              marginLeft: { xs: 0, md: "520px" },
-              marginRight: 0,
-            }}
-          />
-        </Grid>
-      </Grid>
-
-      <Box
-        sx={{
-          width: "100vw",
-          position: "relative",
-          left: "50%",
-          right: "50%",
-          marginLeft: "-50vw",
-          marginRight: "-50vw",
-          bgcolor: "#33a9c9",
-          py: 1,
-          overflowX: "auto",
-        }}
-      >
-        <Box sx={{ maxWidth: 1728, mx: "auto", px: { xs: 1, md: 3 } }}>
-          <Tabs
-            value={tabValue}
-            onChange={handleChange}
-            variant="scrollable"
-            scrollButtons="auto"
-            sx={{
-              "& .MuiTabs-flexContainer": {
-                justifyContent: { xs: "flex-start", md: "space-between" },
-                width: "100%",
-              },
-              "& .MuiTab-root": {
-                textTransform: "none",
-                fontWeight: 500,
-                fontFamily: "Poppins",
-                fontSize: { xs: "0.75rem", md: "0.9rem" },
-                color: "#fff",
-                minHeight: "36px",
-                px: { xs: 1, md: 2 },
-                mx: 0.5,
-                flex: { xs: "0 0 auto", md: "1 1 auto" },
-                maxWidth: "none",
-              },
-              "& .Mui-selected": {
-                color: "#33a9c9",
-                bgcolor: "#fff",
-                borderRadius: "9999px",
-              },
-            }}
-          >
-            {[
-              "Offers",
-              "Burgers",
-              "Fries",
-              "Snacks",
-              "Salads",
-              "Cold drinks",
-              "Happy Meal®",
-              "Desserts",
-              "Hot drinks",
-              "Sauces",
-              "Orbit®",
-            ].map((label) => (
-              <Tab key={label} label={label} />
-            ))}
-          </Tabs>
-        </Box>
-      </Box>
-
-      <PromotionalCards />
-      <BurgerSection />
-      <FriesSection />
-      <ColdDrinkSection />
-
-      <Box
-        sx={{
-          maxWidth: 1728,
-          mx: "auto",
-          px: { xs: 2, md: 3 },
-          py: 4,
-          fontFamily: "Poppins",
-        }}
-      >
-        <RestaurantInfoCard />
-      </Box>
-      <RestaurantMap />
-      <RestaurantReviews />
-      <SimilarRestaurants />
-    </Box>
+    </div>
   );
-}
+};
+
+export default Header;

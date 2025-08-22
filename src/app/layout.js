@@ -1,8 +1,9 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import AnnouncementBar from "@/components/AnnouncementBar";
-import Footer from "@/components/Footer";
+import { Providers } from "@/store/Providers";
+import AnnouncementBar from "@/components/common/AnnouncementBar";
+import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/common/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -19,14 +20,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.variable} font-poppins antialiased`}>
-        <div className="min-h-screen bg-white">
-          <div className="max-w-7xl mx-auto bg-white">
-            <AnnouncementBar />
-            <Navbar />
-            {children}
+        <Providers>
+          <div className="min-h-screen bg-white">
+            <div className="max-w-7xl mx-auto bg-white">
+              <AnnouncementBar />
+              <Navbar />
+              {children}
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
+        </Providers>
       </body>
     </html>
   );

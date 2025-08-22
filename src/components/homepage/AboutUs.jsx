@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Paper, Typography, Button, Divider } from "@mui/material";
-import { qaItems, cardData } from "../data/statsData";
+import { cardData, qaItems } from "@/data/statsData";
+
 
 export default function AboutUs() {
     return (

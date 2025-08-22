@@ -1,8 +1,9 @@
 import React from "react";
 import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
-import { brands } from "../data/brands";
+import { categories } from "@/data/categories";
 
-const PopularBrands = () => {
+// Displays grid of food categories with horizontal scroll on mobile
+const PopularCategories = () => {
   return (
     <Box sx={{ py: 3, backgroundColor: "white" }}>
       {/* Header */}
@@ -14,18 +15,25 @@ const PopularBrands = () => {
             fontFamily: "Poppins",
             fontWeight: 700,
             color: "#000000",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
             fontSize: { xs: "24px", md: "32px" },
             lineHeight: "100%",
+            letterSpacing: "0%",
           }}
         >
-          Popular Brands
+          <Box sx={{ display: { xs: "none", md: "inline" } }}>Turbotreats </Box>
+          Popular Categories
+          <span style={{ fontSize: "32px" }}>🤩</span>
         </Typography>
       </Box>
 
-      {/* Brands Grid */}
+      {/* Scrollable Category Grid */}
       <Box
-        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-6 md:gap-4"
+        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory"
         sx={{
+          display: "flex",
           gap: 2,
           px: { xs: 2, md: 0 },
           pb: { xs: 2, md: 0 },
@@ -36,21 +44,21 @@ const PopularBrands = () => {
           scrollbarWidth: "none",
         }}
       >
-        {brands.map((brand) => (
+        {categories.map((category) => (
           <Card
-            key={brand.id}
+            key={category.id}
             elevation={0}
             className="snap-center"
             sx={{
-              minWidth: { xs: "200px", md: "auto" },
+              minWidth: { xs: "200px", md: "238px" },
+              width: { xs: "200px", md: "238px" },
+              height: "266px",
               backgroundColor: "transparent",
-              borderRadius: "16px",
+              borderRadius: "12px",
               cursor: "pointer",
               transition: "all 0.3s ease-in-out",
               overflow: "hidden",
-              flex: { xs: "0 0 auto", md: "1" },
-              aspectRatio: "1/1",
-              border: "none",
+              flex: { xs: "0 0 auto", md: "0 1 auto" },
               "&:hover": {
                 transform: "scale(1.05)",
               },
@@ -66,24 +74,22 @@ const PopularBrands = () => {
                 "&:last-child": { pb: 0 },
               }}
             >
-              {/* Brand Image */}
               <CardMedia
                 component="img"
-                image={brand.image}
-                alt={brand.name}
+                image={category.image}
+                alt={category.title}
                 sx={{
                   width: "100%",
-                  height: "80%",
-                  objectFit: "cover",
-                  objectPosition: "center",
-                  p: 0,
-                  backgroundColor: "#f8f9fa",
-                  filter: "drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.1))",
-                  mixBlendMode: "multiply",
+                  height: "90%",
+                  objectFit: "contain",
+                  position: "absolute",
+                  top: 0,
+                  bottom: 5,
+                  left: 0,
+                  borderRadius: "12px",
                 }}
               />
 
-              {/* Brand Name Section */}
               <Box
                 sx={{
                   position: "absolute",
@@ -91,22 +97,33 @@ const PopularBrands = () => {
                   left: 0,
                   right: 0,
                   p: 2,
-                  backgroundColor: "#3AA1C4",
-                  borderRadius: "0 0 16px 16px",
+                  textAlign: "left",
+                  backgroundColor: "#F5F5F5",
+                  borderRadius: "0 0 12px 12px",
                 }}
               >
                 <Typography
                   variant="h6"
                   component="h3"
                   sx={{
-                    fontWeight: 600,
-                    color: "white",
-                    fontSize: "16px",
+                    fontWeight: 700,
+                    color: "#1f2937",
+                    fontSize: "17px",
                     lineHeight: 1.2,
-                    textAlign: "center",
+                    mb: 0.5,
                   }}
                 >
-                  {brand.name}
+                  {category.title}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#3AA1C4",
+                    fontSize: "12px",
+                    fontWeight: 400,
+                  }}
+                >
+                  {category.restaurants}
                 </Typography>
               </Box>
             </CardContent>
@@ -117,4 +134,4 @@ const PopularBrands = () => {
   );
 };
 
-export default PopularBrands;
+export default PopularCategories;

@@ -52,6 +52,7 @@ export default function RestaurantReviews() {
             fontWeight: 'bold',
             fontFamily: "poppins",
             fontSize: { xs: "1.5rem", md: "2rem" },
+            color:"#000000"
           }}>
             Customer Reviews
           </Typography>
@@ -205,7 +206,8 @@ export default function RestaurantReviews() {
               sx={{ 
                 fontSize: { xs: '1.5rem', md: '2rem' }, 
                 fontWeight: 'semi-bold', 
-                lineHeight: 1 
+                lineHeight: 1, 
+                color: '#000000'
               }}
             >
               3.4

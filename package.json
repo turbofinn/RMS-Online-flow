@@ -6,22 +6,23 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export",
+    "deploy": "npm run build && aws s3 sync ./out s3://turbotreats-online-flow/ --delete --region eu-north-1"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.0",
     "@mui/material": "^7.3.0",
-<<<<<<< Updated upstream
-    "leaflet": "^1.9.4",
-=======
     "@react-google-maps/api": "^2.20.7",
->>>>>>> Stashed changes
+    "@reduxjs/toolkit": "^2.8.2",
+    "leaflet": "^1.9.4",
     "next": "15.4.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

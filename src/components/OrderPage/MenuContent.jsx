@@ -1,11 +1,9 @@
-// components/MenuContent.js
 import React from "react";
 import { Button } from "@mui/material";
 import { KeyboardArrowDown } from "@mui/icons-material";
 import MenuItem from "./MenuItem";
 
 const MenuContent = ({ selectedCategory, onAddToCart }) => {
-  // Sample menu data - replace with your actual data
   const menuData = {
     Pizzas: [
       {
@@ -14,7 +12,7 @@ const MenuContent = ({ selectedCategory, onAddToCart }) => {
         rating: 4.5,
         description:
           "UberEats™ Big Mac™ · Beef Cheeseburger · 2 medium-sized French Fries, 2 cold drinks",
-        image: "/api/placeholder/120/120",
+        image: "/assets/pizza4.svg",
         prices: { small: 21.3, medium: 23.3, large: 27.9 },
         hasXLarge: true,
         xlargePrice: 24.9,
@@ -25,7 +23,7 @@ const MenuContent = ({ selectedCategory, onAddToCart }) => {
         rating: 4.5,
         description:
           "UberEats™ Big Mac™ · Beef Cheeseburger · 2 medium-sized French Fries, 2 cold drinks",
-        image: "/api/placeholder/120/120",
+        image: "/assets/pizza (2).svg",
         prices: { small: 21.3, medium: 23.3, large: 27.9 },
         hasXLarge: true,
         xlargePrice: 24.9,
@@ -36,7 +34,7 @@ const MenuContent = ({ selectedCategory, onAddToCart }) => {
         rating: 4.5,
         description:
           "UberEats™ Big Mac™ · Beef Cheeseburger · 2 medium-sized French Fries, 2 cold drinks",
-        image: "/api/placeholder/120/120",
+        image: "/assets/pizza3.svg",
         prices: { small: 21.3, medium: 23.3, large: 27.9 },
         hasXLarge: true,
         xlargePrice: 24.9,
@@ -48,7 +46,7 @@ const MenuContent = ({ selectedCategory, onAddToCart }) => {
         name: "Classic Garlic Bread",
         rating: 4.2,
         description: "Fresh baked bread with garlic butter and herbs",
-        image: "/api/placeholder/120/120",
+        image: "/assets/pizza3.svg",
         price: 8.9,
       },
       {
@@ -56,7 +54,7 @@ const MenuContent = ({ selectedCategory, onAddToCart }) => {
         name: "Cheesy Garlic Bread",
         rating: 4.6,
         description: "Garlic bread topped with melted mozzarella cheese",
-        image: "/api/placeholder/120/120",
+         image: "/assets/pizza3.svg",
         price: 12.9,
       },
     ],
@@ -163,10 +161,12 @@ const MenuContent = ({ selectedCategory, onAddToCart }) => {
   const currentItems = menuData[selectedCategory] || [];
 
   return (
-    <div className="flex-1 p-4">
+    <div className="w-full">
       {/* Header with Category Name and Sort Button */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl text-black font-bold">{selectedCategory}</h2>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 md:mb-6 gap-4">
+        <h2 className="text-xl md:text-2xl text-black font-bold">
+          {selectedCategory}
+        </h2>
         <Button
           variant="outlined"
           endIcon={<KeyboardArrowDown />}
@@ -176,11 +176,12 @@ const MenuContent = ({ selectedCategory, onAddToCart }) => {
             backgroundColor: "#F6F6F6",
             color: "#000",
             borderColor: "#e5e7eb",
-            px: 3,
+            px: { xs: 2, sm: 3 },
             py: 1,
-            minWidth: "220px",
+            minWidth: { xs: "100%", sm: "220px" },
             display: "flex",
             justifyContent: "space-between",
+            fontSize: { xs: "0.875rem", sm: "1rem" },
             "&:hover": {
               backgroundColor: "#e5e7eb",
               borderColor: "#d1d5db",
@@ -192,19 +193,16 @@ const MenuContent = ({ selectedCategory, onAddToCart }) => {
       </div>
 
       {/* Menu Items List */}
-      <div className="space-y-4">
+      <div className="space-y-3 md:space-y-4">
         {currentItems.length > 0 ? (
           currentItems.map((item) => (
-            <MenuItem
-              key={item.id}
-              item={item}
-              onAddToCart={onAddToCart}
-              category={selectedCategory}
-            />
+            <MenuItem key={item.id} item={item} category={selectedCategory} />
           ))
         ) : (
-          <div className="text-center py-12 text-gray-500">
-            <p>No items available in {selectedCategory}</p>
+          <div className="text-center py-8 md:py-12 text-gray-500">
+            <p className="text-sm md:text-base">
+              No items available in {selectedCategory}
+            </p>
           </div>
         )}
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { statsData } from "../data/statsData";
+import { statsData } from "@/data/statsData";
 
 const StatsBanner = () => {
     return (
