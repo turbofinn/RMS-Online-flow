@@ -1,5 +1,13 @@
 "use client";
 import { useState } from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  Divider,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { LocationOn, ArrowCircleDown } from "@mui/icons-material";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,6 +17,8 @@ const GOOGLE_MAPS_API_KEY = "AIzaSyD-_p4x8ysVeIqV1H92viTaonxkBW80QYA";
 const AnnouncementBar = () => {
   const [location, setLocation] = useState("Fetching location...");
   const [loading, setLoading] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const fetchLocation = () => {
     if (!navigator.geolocation) {
@@ -19,8 +29,7 @@ const AnnouncementBar = () => {
     setLoading(true);
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
+        const { latitude: lat, longitude: lng } = pos.coords;
 
         try {
           const res = await fetch(
@@ -30,23 +39,18 @@ const AnnouncementBar = () => {
 
           if (data.status === "OK" && data.results.length > 0) {
             const components = data.results[0].address_components;
-
-            let city = "";
-            let state = "";
+            let city = "",
+              state = "";
 
             components.forEach((comp) => {
-              // First priority: locality
               if (comp.types.includes("locality") && !city) {
                 city = comp.long_name;
-              }
-              // Second priority: administrative_area_level_2 (district/city)
-              else if (
+              } else if (
                 comp.types.includes("administrative_area_level_2") &&
                 !city
               ) {
                 city = comp.long_name;
               }
-              // State
               if (
                 comp.types.includes("administrative_area_level_1") &&
                 !state
@@ -55,112 +59,352 @@ const AnnouncementBar = () => {
               }
             });
 
-            const address = city ? `${city}, ${state}` : `${lat}, ${lng}`;
-            setLocation(address);
+            setLocation(city ? `${city}, ${state}` : `${lat}, ${lng}`);
           } else {
             setLocation(`Lat: ${lat}, Lng: ${lng}`);
           }
         } catch (error) {
-          console.error(error);
           setLocation("Error fetching location");
         }
         setLoading(false);
       },
-      (err) => {
-        console.error(err);
+      () => {
         setLocation("Permission denied");
         setLoading(false);
       }
     );
   };
 
-  return (
-    <div
-      style={{ fontFamily: "Poppins", fontWeight: 500, fontSize: "12px" }}
-      className="bg-[#FAFAFA] border border-gray-200 rounded-b-2xl pl-2 sm:pl-4 lg:pl-8 flex justify-between items-stretch text-sm text-gray-700 h-12 overflow-hidden"
-    >
-      {/* Left Section - Promo */}
-      <div className="flex items-center h-full py-2 sm:py-4 min-w-0 flex-shrink">
-        <span className="hidden sm:inline">
-          🌟 Get 5% Off your first order,{" "}
-        </span>
-        <span className="sm:hidden text-xs">🌟 5% Off </span>
-        <Link
-          href="#"
-          className="text-[#3AA1C4] font-semibold text-xs sm:text-sm ml-1"
-        >
-          <span className="hidden sm:inline">Promo: ORDER5</span>
-          <span className="sm:hidden">ORDER5</span>
-        </Link>
-      </div>
+  const locationText = loading
+    ? isMobile
+      ? "Fetching..."
+      : "Fetching location..."
+    : location;
 
-      {/* Middle Section - Location */}
-      <div className="hidden md:flex items-center gap-1 lg:gap-2 h-full py-4 px-2 flex-shrink min-w-0">
-        <LocationOn
-          fontSize="small"
-          className="text-[#03081F] font-medium flex-shrink-0"
-        />
-        <span className="font-medium truncate">
-          {loading ? "Fetching location..." : location}
-        </span>
-        <button
+  return (
+    <Box
+      sx={{
+        fontFamily: "Poppins",
+        fontWeight: 500,
+        fontSize: "12px",
+        backgroundColor: "#FAFAFA",
+        border: "1px solid #e5e7eb",
+        borderRadius: "0 0 16px 16px",
+        pl: { xs: 1, sm: 2, lg: 4 },
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "stretch",
+        color: "#374151",
+        height: "48px",
+        overflow: "hidden",
+      }}
+    >
+      {/* Promo Section - Hidden on Mobile */}
+      <Box
+        sx={{
+          display: { xs: "none", sm: "flex" },
+          alignItems: "center",
+          height: "100%",
+          py: 2,
+          minWidth: 0,
+          flexShrink: 1,
+        }}
+      >
+        <Typography
+          variant="body2"
+          sx={{ fontSize: "12px", fontFamily: "Poppins", fontWeight: 500 }}
+        >
+          🌟 Get 5% Off your first order,{" "}
+        </Typography>
+        <Typography
+          component={Link}
+          href="#"
+          sx={{
+            color: "#3AA1C4",
+            fontWeight: 600,
+            fontSize: "12px",
+            textDecoration: "none",
+            ml: 0.5,
+            fontFamily: "Poppins",
+            "&:hover": { textDecoration: "underline" },
+          }}
+        >
+          Promo: ORDER5
+        </Typography>
+      </Box>
+
+      {/* Desktop Location */}
+      <Box
+        sx={{
+          display: { xs: "none", md: "flex" },
+          alignItems: "center",
+          gap: { md: 0.5, lg: 1 },
+          height: "100%",
+          py: 2,
+          px: 1,
+          flexShrink: 1,
+          minWidth: 0,
+        }}
+      >
+        <LocationOn fontSize="small" sx={{ color: "#03081F", flexShrink: 0 }} />
+        <Typography
+          variant="body2"
+          sx={{
+            fontWeight: 500,
+            fontSize: "12px",
+            fontFamily: "Poppins",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {locationText}
+        </Typography>
+        <Button
           onClick={fetchLocation}
-          className="text-[#FC8A06] text-xs underline whitespace-nowrap flex-shrink-0"
+          sx={{
+            color: "#FC8A06",
+            fontSize: "11px",
+            textDecoration: "underline",
+            minWidth: "auto",
+            p: 0,
+            textTransform: "none",
+            fontFamily: "Poppins",
+            flexShrink: 0,
+            "&:hover": {
+              backgroundColor: "transparent",
+              textDecoration: "underline",
+            },
+          }}
         >
           Change Location
-        </button>
-      </div>
+        </Button>
+      </Box>
 
       {/* Mobile Location */}
-      <div className="flex md:hidden items-center gap-1 h-full py-2 px-1 flex-shrink min-w-0">
+      <Box
+        sx={{
+          display: { xs: "flex", md: "none" },
+          alignItems: "center",
+          gap: 0.5,
+          height: "100%",
+          py: 1,
+          px: 0.5,
+          flex: 1,
+          minWidth: 0,
+          overflow: "hidden",
+        }}
+      >
         <LocationOn
           fontSize="small"
-          className="text-[#03081F] font-medium flex-shrink-0"
+          sx={{ color: "#03081F", flexShrink: 0, fontSize: "16px" }}
         />
-        <span className="text-xs font-medium">
-          {loading ? "Fetching..." : location}
-        </span>
-      </div>
+        <Box sx={{ flex: 1, minWidth: 0, mr: 1 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              fontSize: "10px",
+              fontWeight: 500,
+              fontFamily: "Poppins",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              lineHeight: 1.2,
+            }}
+          >
+            {locationText}
+          </Typography>
+          <Button
+            onClick={fetchLocation}
+            sx={{
+              color: "#FC8A06",
+              fontSize: "9px",
+              textDecoration: "underline",
+              minWidth: "auto",
+              p: 0,
+              mt: -0.5,
+              textTransform: "none",
+              fontFamily: "Poppins",
+              fontWeight: 600,
+              lineHeight: 1,
+              "&:hover": {
+                backgroundColor: "transparent",
+                textDecoration: "underline",
+                color: "#e67e22",
+              },
+            }}
+          >
+            Change Location
+          </Button>
+        </Box>
+      </Box>
 
-      {/* Right Section - Cart */}
-      <div className="flex items-center bg-[#d4a995] px-2 sm:px-4 lg:px-6 border rounded-b-2xl text-white text-xs font-medium h-full flex-shrink-0">
-        <Image
-          src="/assets/scart.svg"
-          alt="Shopping Cart"
-          width={14}
-          height={14}
-          className="text-white flex-shrink-0"
-        />
+      {/* Cart Section */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          backgroundColor: "#d4a995",
+          px: { xs: 2, sm: 2, lg: 3 },
+          borderRadius: "0 0 16px 0",
+          color: "white",
+          fontSize: "12px",
+          fontWeight: 500,
+          height: "100%",
+          flexShrink: 0,
+          minWidth: { xs: "100px", sm: "auto" },
+        }}
+      >
+        <Box
+          component={Link}
+          href="/order"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            textDecoration: "none",
+            color: "inherit",
+            p: 0.5,
+            borderRadius: "4px",
+            transition: "all 0.2s ease",
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              transform: "scale(1.1)",
+            },
+          }}
+        >
+          <Image
+            src="/assets/scart.svg"
+            alt="Shopping Cart"
+            width={14}
+            height={14}
+          />
+        </Box>
 
         {/* Desktop Cart Details */}
-        <div className="hidden lg:flex items-center">
-          <div className="w-px h-6 bg-white/30 mx-3"></div>
-          <span>23 Items</span>
-          <div className="w-px h-6 bg-white/30 mx-3"></div>
-          <span className="font-semibold">Rs 79.89</span>
-          <div className="w-px h-6 bg-white/30 mx-3"></div>
-          <ArrowCircleDown fontSize="small" className="text-white" />
-        </div>
+        <Box sx={{ display: { xs: "none", lg: "flex" }, alignItems: "center" }}>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              mx: 1.5,
+              height: "24px",
+            }}
+          />
+          <Typography
+            sx={{ fontSize: "12px", fontFamily: "Poppins", fontWeight: 500 }}
+          >
+            23 Items
+          </Typography>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              mx: 1.5,
+              height: "24px",
+            }}
+          />
+          <Typography
+            sx={{ fontWeight: 600, fontSize: "12px", fontFamily: "Poppins" }}
+          >
+            Rs 79.89
+          </Typography>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              mx: 1.5,
+              height: "24px",
+            }}
+          />
+          <ArrowCircleDown fontSize="small" />
+        </Box>
 
         {/* Tablet Cart Details */}
-        <div className="hidden sm:flex lg:hidden items-center">
-          <div className="w-px h-6 bg-white/30 mx-2"></div>
-          <span className="text-xs">23</span>
-          <div className="w-px h-6 bg-white/30 mx-2"></div>
-          <span className="font-semibold text-xs">Rs 79.89</span>
-          <div className="w-px h-6 bg-white/30 mx-2"></div>
-          <ArrowCircleDown fontSize="small" className="text-white" />
-        </div>
+        <Box
+          sx={{
+            display: { xs: "none", sm: "flex", lg: "none" },
+            alignItems: "center",
+          }}
+        >
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              mx: 1,
+              height: "24px",
+            }}
+          />
+          <Typography
+            sx={{ fontSize: "11px", fontFamily: "Poppins", fontWeight: 500 }}
+          >
+            23
+          </Typography>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              mx: 1,
+              height: "24px",
+            }}
+          />
+          <Typography
+            sx={{ fontWeight: 600, fontSize: "11px", fontFamily: "Poppins" }}
+          >
+            Rs 79.89
+          </Typography>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              mx: 1,
+              height: "24px",
+            }}
+          />
+          <ArrowCircleDown fontSize="small" />
+        </Box>
 
         {/* Mobile Cart Details */}
-        <div className="flex sm:hidden items-center">
-          <div className="w-px h-4 bg-white/30 mx-1"></div>
-          <span className="font-semibold text-xs">Rs 79.89</span>
-          <div className="w-px h-4 bg-white/30 mx-1"></div>
-          <ArrowCircleDown fontSize="small" className="text-white" />
-        </div>
-      </div>
-    </div>
+        <Box sx={{ display: { xs: "flex", sm: "none" }, alignItems: "center" }}>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              mx: 0.5,
+              height: "16px",
+              width: "1px",
+            }}
+          />
+          <Typography
+            sx={{
+              fontWeight: 600,
+              fontSize: "11px",
+              fontFamily: "Poppins",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Rs 79.89
+          </Typography>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              mx: 0.5,
+              height: "16px",
+              width: "1px",
+            }}
+          />
+          <ArrowCircleDown sx={{ color: "white", fontSize: "16px" }} />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
