@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { IconButton } from "@mui/material";
+import { CircularProgress, IconButton } from "@mui/material";
 import {
   ShoppingBasket,
   Add,
@@ -13,13 +13,64 @@ import {
   LocalOffer,
 } from "@mui/icons-material";
 import { removeItem, updateItem } from "@/store/slices/cartSlice";
+import { createPaymentOrder } from "@/services/paymentApi";
 
 const Cart = () => {
   const [couponCode, setCouponCode] = useState("");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-
-  // Get cart items from Redux store
   const cartItems = useSelector((state) => state.cart.items);
+
+
+  const handlePayment = async () => {
+    if (cartItems.length === 0) return;
+
+    try {
+      setLoading(true);
+      const order = await createPaymentOrder();
+
+      if (!order || !order.orderID) {
+        alert("Failed to create payment order. Backend did not return orderID.");
+        setLoading(false);
+        return;
+      }
+
+      const loadRazorpay = () =>
+        new Promise((resolve) => {
+          if (window.Razorpay) return resolve();
+          const script = document.createElement("script");
+          script.src = "https://checkout.razorpay.com/v1/checkout.js";
+          script.onload = resolve;
+          document.body.appendChild(script);
+        });
+
+      await loadRazorpay();
+
+      const options = {
+        order_id: order.orderID,
+        name: "TurboTreats",
+        description: "Order Payment",
+        handler: function (response) {
+          alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+          window.location.href = "/checkout-success";
+        },
+        theme: { color: "#028643" },
+        prefill: {
+          name: "Customer",
+          email: "customer@example.com",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      alert("Payment failed. Please try again.");
+    }
+  };
 
   // Calculate totals
   const subtotal = cartItems.reduce(
@@ -318,22 +369,27 @@ const Cart = () => {
           </div>
         </div>
 
-        {/* Enhanced Checkout Button */}
+        {/*  Checkout Button */}
         <button
-          disabled={cartItems.length === 0}
-          className={`w-full flex items-center justify-center gap-3 font-bold text-lg py-4 md:py-3 rounded-2xl md:rounded-lg transition-all shadow-lg ${
-            cartItems.length === 0
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white hover:shadow-xl transform hover:scale-[1.02] md:hover:scale-100"
-          }`}
+          disabled={cartItems.length === 0 || loading}
+          onClick={handlePayment}
+          className={`w-full flex items-center justify-center cursor-pointer gap-3 font-bold text-lg py-4 md:py-3 rounded-2xl md:rounded-lg transition-all shadow-lg ${cartItems.length === 0 || loading
+            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+            : "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white hover:shadow-xl transform hover:scale-[1.02] md:hover:scale-100"
+            }`}
         >
-          <span>
-            {cartItems.length === 0
-              ? "Add items to checkout"
-              : "Proceed to Checkout"}
-          </span>
-          {cartItems.length > 0 && <span className="text-xl">➔</span>}
+          {loading ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            <>
+              <span>
+                {cartItems.length === 0 ? "Add items to checkout" : "Proceed to Checkout"}
+              </span>
+              {cartItems.length > 0 && <span className="text-xl">➔</span>}
+            </>
+          )}
         </button>
+
       </div>
     </div>
   );

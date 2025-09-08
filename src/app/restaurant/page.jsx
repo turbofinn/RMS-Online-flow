@@ -270,6 +270,7 @@ export default function RestaurantDetailsPage() {
               fontSize: { xs: "1rem", md: "1.25rem" },
               fontWeight: 600,
               textAlign: { xs: "center", md: "left" },
+              color: "black"
             }}
           >
             All Offers from McDonald's East London

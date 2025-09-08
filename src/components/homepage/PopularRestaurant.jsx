@@ -1,10 +1,20 @@
 "use client";
-import { Card, CardContent, CardMedia, Typography, Chip } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Chip,
+} from "@mui/material";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { categories, restaurants } from "@/data/restaurants";
+import FoodLoader from "../common/FoodLoader";
 
 export default function PopularRestaurant() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   // Filter restaurants based on selected category
   const filteredRestaurants =
@@ -12,8 +22,17 @@ export default function PopularRestaurant() {
       ? restaurants
       : restaurants.filter((r) => r.category === activeCategory);
 
+  const handleCardClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      router.push("/restaurant");
+    }, 1500);
+  };
+
   return (
     <section className="relative w-full overflow-hidden rounded-2xl bg-white p-6 px-4 md:px-0">
+      {loading && <FoodLoader />}
+
       {/* Header and Category Filters */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 md:mb-6 gap-4">
         <h2 className="text-2xl md:text-3xl font-bold text-[#000000] px-2 md:px-0">
@@ -28,10 +47,9 @@ export default function PopularRestaurant() {
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`text-[16px] font-medium px-5 py-2 rounded-full transition whitespace-nowrap
-                  ${
-                    isActive
-                      ? "border border-blue-400 text-blue-600 font-bold"
-                      : "text-gray-700 hover:text-blue-600 cursor-pointer hover:bg-gray-50"
+                  ${isActive
+                    ? "border border-blue-400 text-blue-600 font-bold"
+                    : "text-gray-700 hover:text-blue-600 cursor-pointer hover:bg-gray-50"
                   }`}
               >
                 {cat}
@@ -41,7 +59,7 @@ export default function PopularRestaurant() {
         </div>
       </div>
 
-      {/* Restaurant Grid - Horizontal scroll on mobile */}
+      {/* Restaurant Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 sm:grid [@media(max-width:640px)]:grid-cols-none [@media(max-width:640px)]:flex [@media(max-width:640px)]:overflow-x-auto [@media(max-width:640px)]:pb-4 [@media(max-width:640px)]:scroll-smooth [@media(max-width:640px)]:px-2 md:px-0">
         {filteredRestaurants.map((r) => (
           <div
@@ -56,7 +74,10 @@ export default function PopularRestaurant() {
                 height: { xs: 280, sm: 325 },
                 borderRadius: "16px",
                 boxShadow: "none",
+                cursor: "pointer",
+                position: "relative",
               }}
+              onClick={handleCardClick}
             >
               <CardMedia
                 component="img"

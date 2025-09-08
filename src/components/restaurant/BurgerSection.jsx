@@ -1,7 +1,11 @@
 "use client";
 import { Box, Grid, Typography, Card, CardContent } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import FoodLoader from "../common/FoodLoader";
 
-const BurgerCard = ({ title, description, price, burgerImage }) => {
+
+const BurgerCard = ({ title, description, price, burgerImage, onClick }) => {
   return (
     <Card sx={{
       width: { xs: '100%', sm: 386 },
@@ -10,9 +14,17 @@ const BurgerCard = ({ title, description, price, burgerImage }) => {
       boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
       border: '1px solid #f0f0f0',
       position: 'relative',
-      p: { xs: 1, sm: 2 }
-    }}>
-      <CardContent sx={{  
+      p: { xs: 1, sm: 2 },
+      cursor: 'pointer',
+      '&:hover': {
+        boxShadow: '0 6px 12px rgba(0,0,0,0.15)',
+        transform: 'translateY(-2px)',
+        transition: 'all 0.3s ease'
+      }
+    }}
+      onClick={onClick}
+    >
+      <CardContent sx={{
         width: 'calc(100% - 50px)',
         height: '100%',
         display: 'flex',
@@ -21,8 +33,8 @@ const BurgerCard = ({ title, description, price, burgerImage }) => {
       }}>
         {/* Text Content */}
         <Box sx={{ width: { xs: '60%', sm: '70%' } }}>
-          <Typography variant="h6" 
-            sx={{ 
+          <Typography variant="h6"
+            sx={{
               fontSize: { xs: "0.7rem", sm: "0.8rem" },
               fontWeight: "bold",
               fontFamily: "Poppins",
@@ -30,24 +42,24 @@ const BurgerCard = ({ title, description, price, burgerImage }) => {
             }}>
             {title}
           </Typography>
-          
-          <Typography variant="body2" 
-            color="text.secondary" 
-            sx={{ 
+
+          <Typography variant="body2"
+            color="text.secondary"
+            sx={{
               mb: 2,
               fontSize: { xs: "0.5rem", sm: "0.6rem" },
-              fontWeight: 600, // "semi-bold" is not a valid value, use 600 instead
-              fontFamily: "Poppins", 
+              fontWeight: 600,
+              fontFamily: "Poppins",
             }}>
             {description}
           </Typography>
-          
-          <Typography variant="h6" sx={{ 
-              fontSize: { xs: "0.7rem", sm: "0.8rem" },
-              mb: {xs: 2, md: 2}, // Fixed prop name (bottomMargin -> mb)
-              fontWeight: "bold",
-              fontFamily: "Poppins", 
-            }}>
+
+          <Typography variant="h6" sx={{
+            fontSize: { xs: "0.7rem", sm: "0.8rem" },
+            mb: { xs: 2, md: 2 },
+            fontWeight: "bold",
+            fontFamily: "Poppins",
+          }}>
             {price}
           </Typography>
         </Box>
@@ -73,8 +85,8 @@ const BurgerCard = ({ title, description, price, burgerImage }) => {
           position: 'absolute',
           bottom: -10,
           right: -10,
-          width: {xs: 60, md: 80},
-          height: {xs: 60, md: 80},
+          width: { xs: 60, md: 80 },
+          height: { xs: 60, md: 80 },
           borderRadius: '30px 0 0 0',
           overflow: 'hidden',
           backgroundColor: '#f5f5f5',
@@ -94,17 +106,17 @@ const BurgerCard = ({ title, description, price, burgerImage }) => {
               transform: 'rotate(180deg)'
             }}
           />
-          
+
           <Box
             component="img"
             src="/assets/Plus.svg"
             alt="Add"
             sx={{
               position: 'absolute',
-              bottom: {xs: 18, md: 28},
-              left: {xs: 12, md: 16},
-              width: {xs: 25, md: 30},
-              height: {xs: 25, md: 30},
+              bottom: { xs: 18, md: 28 },
+              left: { xs: 12, md: 16 },
+              width: { xs: 25, md: 30 },
+              height: { xs: 25, md: 30 },
               backgroundColor: 'white',
               borderRadius: '50%',
               p: '3px',
@@ -156,38 +168,52 @@ const defaultBurgerItems = [
   }
 ];
 
-const BurgerSection = ({ burgerItems = defaultBurgerItems  }) => {
+const BurgerSection = ({ burgerItems = defaultBurgerItems }) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleCardClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      router.push("/order");
+    }, 1500);
+  };
+
   return (
-    <Box sx={{ 
-      maxWidth: 1728, 
-      mx: "auto", 
-      px: { xs: 4, md: 3 }, 
-      py: 4,
-      fontFamily: "Poppins"
-    }}>
-      <Typography variant="h4" sx={{ 
-        fontSize: { xs: "1.2rem", sm: "1.5rem" },
-        fontWeight: "bold",
-        mb: 4,
-        fontFamily: "Poppins",
-        color: '#33a9c9',
+    <>
+      {loading && <FoodLoader />}
+      <Box sx={{
+        maxWidth: 1728,
+        mx: "auto",
+        px: { xs: 4, md: 3 },
+        py: 4,
+        fontFamily: "Poppins"
       }}>
-        Burgers
-      </Typography>
-      
-      <Grid container spacing={3}>
-        {burgerItems.map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <BurgerCard 
-              title={item.title}
-              description={item.description}
-              price={item.price}
-              burgerImage={item.burgerImage}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+        <Typography variant="h4" sx={{
+          fontSize: { xs: "1.2rem", sm: "1.5rem" },
+          fontWeight: "bold",
+          mb: 4,
+          fontFamily: "Poppins",
+          color: '#33a9c9',
+        }}>
+          Burgers
+        </Typography>
+
+        <Grid container spacing={3}>
+          {burgerItems.map((item, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <BurgerCard
+                title={item.title}
+                description={item.description}
+                price={item.price}
+                burgerImage={item.burgerImage}
+                onClick={() => handleCardClick(item)}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </>
   );
 };
 

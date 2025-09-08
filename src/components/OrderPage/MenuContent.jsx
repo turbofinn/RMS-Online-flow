@@ -54,7 +54,7 @@ const MenuContent = ({ selectedCategory, onAddToCart }) => {
         name: "Cheesy Garlic Bread",
         rating: 4.6,
         description: "Garlic bread topped with melted mozzarella cheese",
-         image: "/assets/pizza3.svg",
+        image: "/assets/pizza3.svg",
         price: 12.9,
       },
     ],

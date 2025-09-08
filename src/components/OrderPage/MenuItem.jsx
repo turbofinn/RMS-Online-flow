@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { Button, Rating } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/store/slices/cartSlice";
 
@@ -26,15 +25,13 @@ const MenuItem = ({ item, category }) => {
   // Render Rating
   const renderRating = (rating = 0) => {
     return (
-      <div className="flex items-center gap-1 mt-1">
-        {[...Array(5)].map((_, i) => (
-          <LocalFireDepartmentIcon
-            key={i}
-            sx={{ fontSize: { xs: 14, sm: 18 } }}
-            className={`${i < rating ? "text-red-500" : "text-gray-300"}`}
-          />
-        ))}
-      </div>
+      <Rating
+        value={rating}
+        max={5}
+        readOnly
+        sx={{ fontSize: { xs: 14, sm: 18 } }}
+        precision={0.5}
+      />
     );
   };
 
@@ -47,17 +44,15 @@ const MenuItem = ({ item, category }) => {
         onClick={() => setSelectedSize(value)}
         variant="outlined"
         disableRipple
-        className={`flex items-center justify-between px-2 sm:px-4 py-1.5 sm:py-2 rounded-md border text-xs sm:text-sm min-w-[100px] sm:min-w-[140px] shadow-sm !capitalize ${
-          isSelected
-            ? "!bg-[#03081F] !text-white !border-[#03081F]"
-            : "!bg-white !text-black !font-bold !border-gray-300 hover:!border-gray-400"
-        }`}
+        className={`flex items-center justify-between px-2 sm:px-4 py-1.5 sm:py-2 rounded-md border text-xs sm:text-sm min-w-[100px] sm:min-w-[140px] shadow-sm !capitalize ${isSelected
+          ? "!bg-[#03081F] !text-white !border-[#03081F]"
+          : "!bg-white !text-black !font-bold !border-gray-300 hover:!border-gray-400"
+          }`}
       >
         {/* Label */}
         <span
-          className={`text-xs sm:text-sm ${
-            !isSelected && "!text-black !font-bold"
-          }`}
+          className={`text-xs sm:text-sm ${!isSelected && "!text-black !font-bold"
+            }`}
         >
           {label}
         </span>
@@ -94,11 +89,15 @@ const MenuItem = ({ item, category }) => {
               />
             </div>
             {/* Optional: Add a small badge for rating */}
-            {item.rating >= 4.5 && (
-              <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full shadow-sm">
-                ★
+            {item.rating && (
+              <div className="flex items-center gap-1">
+                {renderRating(item.rating)}
+                <span className="text-xs text-gray-500 ml-1 font-medium">
+                  ({item.rating})
+                </span>
               </div>
             )}
+
           </div>
 
           {/* Title and Rating with better spacing */}

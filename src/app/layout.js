@@ -1,9 +1,9 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/store/Providers";
-import AnnouncementBar from "@/components/common/AnnouncementBar";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
+import AnnouncementBar from "@/components/common/AnnouncementBar";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
       <body className={`${poppins.variable} font-poppins antialiased`}>
         <Providers>
           <div className="min-h-screen bg-white">
-            <div className="max-w-7xl mx-auto bg-white">
+            <div className="w-full px-1 lg:px-4 bg-white">
               <AnnouncementBar />
               <Navbar />
               {children}

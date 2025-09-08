@@ -95,9 +95,8 @@ const MenuPage = () => {
 
           {/* Chevron icon that rotates */}
           <span
-            className={`transform transition-transform duration-200 ${
-              isSidebarOpen ? "rotate-180" : "rotate-0"
-            }`}
+            className={`transform transition-transform duration-200 ${isSidebarOpen ? "rotate-180" : "rotate-0"
+              }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -117,9 +116,8 @@ const MenuPage = () => {
 
           {/* underline animation */}
           <div
-            className={`absolute bottom-0 left-0 right-0 h-1 bg-[#03081F] transform transition-transform duration-200 ${
-              isSidebarOpen ? "scale-x-100" : "scale-x-0"
-            }`}
+            className={`absolute bottom-0 left-0 right-0 h-1 bg-[#03081F] transform transition-transform duration-200 ${isSidebarOpen ? "scale-x-100" : "scale-x-0"
+              }`}
           ></div>
         </button>
 

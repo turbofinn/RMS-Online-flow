@@ -139,13 +139,15 @@ function HeroMobile() {
       <h2 className="font-bold text-3xl text-[#ff2e3a] mb-4">Fast and Fresh</h2>
 
       {/* Search bar */}
-      <div className="flex items-center rounded-full overflow-hidden border border-gray-300 bg-white shadow-sm mb-6">
+      <div className="flex w-full max-w-md mx-auto items-center rounded-full overflow-hidden border border-gray-300 bg-white shadow-sm mb-6">
         <input
           type="text"
           placeholder="e.g. EC4R 3TE"
-          className="flex-1 px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none text-base"
+          className="flex-1 px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none text-base min-w-0"
         />
-        <button className="bg-[#33a9c9] text-white px-6 py-3">Search</button>
+        <button className="bg-[#33a9c9] text-white font-semibold px-6 py-3 shrink-0 rounded-r-full">
+          Search
+        </button>
       </div>
 
       {/* Simple hero image */}
